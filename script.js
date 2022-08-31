@@ -7,7 +7,7 @@
 
 //ПЕРЕМЕННЫЕ
 let rightPosition = 0;
-let imgContainerPosition = 0;
+let imgBlockPosition = 0;
 let direction = 'right';
 let hit = false;
 let jump = false;
@@ -18,10 +18,7 @@ let halfWidth = window.screen.width / 2;
 let jumpBlock = window.document.querySelector('#jump-block');
 let hitBlock = window.document.querySelector('#hit-block');
 let heroImg = window.document.querySelector('#hero-img');
-heroImg.onclick = (event) => {
-  event.preventDefault();
-}
-let imgContainer = window.document.querySelector('#img-container');
+let imgBlock = window.document.querySelector('#img-block');
 let canvas = window.document.querySelector('#canvas');
 let fsBtn = window.document.querySelector('#fsBtn');
 
@@ -54,26 +51,26 @@ hitBlock.onclick = () => {hit = true};
 const rightHandler = () => {
   heroImg.style.transform = "scale(-1, 1)";
   rightPosition = rightPosition + 1;
-  imgContainerPosition = imgContainerPosition + 1;
+  imgBlockPosition = imgBlockPosition + 1;
   if (rightPosition > 5) {
     rightPosition = 0;
   }
-  heroImg.style.left = `-${rightPosition*288}px`;
-  heroImg.style.top = '-576px';
-  imgContainer.style.left = `${imgContainerPosition*20}px`;
+  heroImg.style.left = `-${rightPosition*96}px`;
+  heroImg.style.top = '-192px';
+  imgBlock.style.left = `${imgBlockPosition*20}px`;
 }
 
 
 const leftHandler = () => {
   heroImg.style.transform = "scale(1, 1)";
   rightPosition = rightPosition + 1;
-  imgContainerPosition = imgContainerPosition - 1;
+  imgBlockPosition = imgBlockPosition - 1;
   if (rightPosition > 5) {
     rightPosition = 0;
   }
-  heroImg.style.left = `-${rightPosition*288}px`;
-  heroImg.style.top = '-576px';
-  imgContainer.style.left = `${imgContainerPosition*20}px`;
+  heroImg.style.left = `-${rightPosition*96}px`;
+  heroImg.style.top = '-192px';
+  imgBlock.style.left = `${imgBlockPosition*20}px`;
 }
 
 
@@ -97,7 +94,7 @@ const standHandler = () => {
   }
 
   rightPosition = rightPosition + 1;
-  heroImg.style.left = `-${rightPosition*288}px`;
+  heroImg.style.left = `-${rightPosition*96}px`;
   heroImg.style.top = '0px';
 }
 
@@ -123,8 +120,8 @@ const hitHandler = () => {
   }
 
   rightPosition = rightPosition + 1;
-  heroImg.style.left = `-${rightPosition*288}px`;
-  heroImg.style.top = '-864px';
+  heroImg.style.left = `-${rightPosition*96}px`;
+  heroImg.style.top = '-288px';
 }
 const jumpHandler = () => {
   switch (direction){
@@ -148,8 +145,8 @@ const jumpHandler = () => {
   }
 
   rightPosition = rightPosition + 1;
-  heroImg.style.left = `-${rightPosition*288}px`;
-  heroImg.style.top = '-288px';
+  heroImg.style.left = `-${rightPosition*96}px`;
+  heroImg.style.top = '-96px';
 }
 
 
@@ -184,7 +181,7 @@ window.ontouchend = onTouchEnd;
 
 
 const lifeCycle = () => {
-  timer = setInterval(()=>{
+  timer = setInterval(() => {
     if (hit){
       hitHandler();
     } else if (jump) {
@@ -195,7 +192,29 @@ const lifeCycle = () => {
   }, 150);
 }
 
+
+
+const addTiles = (i) => {
+  let tile = window.document.createElement('img');
+  let tileBlack = window.document.createElement('img');
+  tile.src = 'assets/1 Tiles/Tile_02.png';
+  tile.style.position = 'absolute';
+  tile.style.left = i*32;
+  tile.style.bottom = 32;
+  tileBlack.src = 'assets/1 Tiles/Tile_04.png';
+  tileBlack.style.position = 'absolute';
+  tileBlack.style.left = i*32;
+  tileBlack.style.bottom = 0;
+  canvas.appendChild(tile);
+  canvas.appendChild(tileBlack);
+  
+}
+
 const start = () => {
   lifeCycle();
+  for(let i = 0; i < 10; i++){
+    addTiles(i);
+  }
+   
 }
 start ();
