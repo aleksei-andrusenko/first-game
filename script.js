@@ -192,29 +192,43 @@ const lifeCycle = () => {
   }, 150);
 }
 
-
-
-const addTiles = (i) => {
+const createTile = (x, y = 1) => {
   let tile = window.document.createElement('img');
-  let tileBlack = window.document.createElement('img');
   tile.src = 'assets/1 Tiles/Tile_02.png';
   tile.style.position = 'absolute';
-  tile.style.left = i*32;
-  tile.style.bottom = 32;
+  tile.style.left = x*32 + 'px';
+  tile.style.bottom = y*32 + 'px';
+  canvas.appendChild(tile);
+}
+
+const createTilesPlatform = (startX, startY, length) => {
+  for (let i = 0; i < length; i++) {
+    createTile(startX+i, startY);
+  }
+}
+
+const addTiles = (i) => {
+  createTile(i);
+  let tileBlack = window.document.createElement('img');
   tileBlack.src = 'assets/1 Tiles/Tile_04.png';
   tileBlack.style.position = 'absolute';
-  tileBlack.style.left = i*32;
+  tileBlack.style.left = i*32 + 'px';
   tileBlack.style.bottom = 0;
-  canvas.appendChild(tile);
   canvas.appendChild(tileBlack);
   
 }
 
 const start = () => {
   lifeCycle();
-  for(let i = 0; i < 10; i++){
+  for(let i = 0; i < 60; i++){
     addTiles(i);
   }
-   
+   createTilesPlatform(10, 10, 10);
+
+   createTilesPlatform(15, 5, 10);
+
+   createTilesPlatform(20, 15, 2);
+
+   createTilesPlatform(30, 20, 1);
 }
 start ();
